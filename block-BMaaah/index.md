@@ -3,7 +3,11 @@ writeCode
 Write code to execute below expressions.
 
 1. Create a database named `blog`.
+   -- use blog
+
 2. Create a collection called 'articles'.
+   -- db.createCollection("articles")
+
 3. Insert multiple documents(at least 3) into articles. It should have fields
 
 - title as string
@@ -32,24 +36,91 @@ Write code to execute below expressions.
 }
 ```
 
+```js
+-- db.blog.insertMany([
+  {
+  title: 'CSS Button Hover Effects',
+  details: '50+ cool CSS hover effects for Buttons',
+  author: {
+    name: 'abc',
+    email: 'abc@email.com',
+    age: 25
+  },
+  tags: ['html', 'css']
+},
+{
+  title: 'CSS Grid',
+  details: 'Basics of CSS Grid',
+  author: {
+    name: 'def',
+    email: 'def@email.com',
+    age: 21
+  },
+  tags: ['css', 'html']
+},
+{
+  title: 'Promises in JS',
+  details: 'beginners guide to understanding async js and promises',
+  author: {
+    name: 'ghi',
+    email: 'ghi@email.com',
+    age: 27
+  },
+  tags: ['js', 'async']
+},
+{
+  title: 'CRUD in MongoDB',
+  details: 'crud(reate, read, update and delete) commands in mongodb',
+  author: {
+    name: 'jkl',
+    email: 'jkl@email.com',
+    age: 31
+  },
+  tags: ['database', 'mongo']
+}
+])
+
+```
+
 4. Find all the articles using `db.COLLECTION_NAME.find()`
+   -- db.blog.find().pretty()
+
 5. Find a document using \_id field.
+   -- db.blog.find({\_id : ObjectId("644a5e3275ae6148baf47c1f")})
+
 6. 1. Find documents using title
+      -- db.blog.find({title : "Promises in JS"})
+
 7. 2. Find documents using author's name field.
+      -- db.blog.find({'author.name' : "abc"})
+
 8. Find document using a specific tag.
+   -- db.blog.find({tags : "mongo"})
 
 9. Update title of a document using its \_id field.
+   -- db.blog.updateOne({\_id: ObjectId("644a5e3275ae6148baf47c1d")} , { $set : { title: "Everything about CSS Grid"}})
+
 10. Update a author's name using article's title.
+    -- db.blog.updateOne({title : "CRUD in MongoDB"} , { $set : { 'author.name': "xyz"}})
+
 11. rename details field to description from all articles in articles collection.
+    -- db.blog.updateMany({},{$rename : {"details" : "description"}})
+
 12. Add additional tag in a specific document.
+    -- db.blog.update({title: 'CSS Button Hover Effects'}, {$push : {tags: "hover"}})
 
 13. Update an article's title using $set and without $set.
+  -- db.blog.updateOne({_id: ObjectId("644a5e3275ae6148baf47c1d")}, {$set : {title : "Basics of CSS Grid"}})
+    -- db.blog.updateOne({\_id: ObjectId("644a5e3275ae6148baf47c1d")}, {title : "Basics of CSS Grid"})
 
 - Write the differences here ?
+  with $set the specified fields get updated with new value but without $set the whole document gets replaced by the new field.
 
 13. find an article using title and increment it's auhtor's age by 5.
+    --db.blog.updateOne({title: "CRUD in MongoDB"},{ $inc : {'author.age' : 5 }})
 
 14. Delete a document using \_id field with `db.COLLECTION_NAME.remove()`.
+    -- db.blog.deleteOne({\_id: ObjectId("644a5e3275ae6148baf47c1d")})
 
 // Sample data
 
@@ -168,6 +239,13 @@ db.users.insertMany([
 Insert above data into database to perform below queries:-
 
 - Find all males who play cricket.
+  -- db.users.find({gender: "Male", sports: "cricket"})
+
 - Update user with extra golf field in sports array whose name is "Steve Ortega".
+  -- db.users.updateOne({name : "Steve Ortega"}, {$push : { sports : "golf"}})
+
 - Find all users who play either 'football' or 'cricket'.
+  -- db.users.find({sports : {$in : ['football','cricket']}})
+
 - Find all users whose name includes 'ri' in their name.
+  -- db.users.find({ $where: function() { return this.name.includes("ri"); } })
