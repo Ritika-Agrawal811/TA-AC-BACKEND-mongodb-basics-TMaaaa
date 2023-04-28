@@ -43,6 +43,8 @@ Go to `https://www.json-generator.com/`
 - download it on `Desktop`
 - import it into mongodb `test` database into a collection named `users`
 
+-- mongoimport "E:\JSON\users.json" -d test -c users --jsonArray --drop
+
 #### Export data from mongodb server to local system in json format using
 
 `mongoexport`command.
@@ -51,9 +53,15 @@ Go to `https://www.json-generator.com/`
 mongoexport --db state --collection cities --out ~/Desktop/states/city.json --jsonArray
 ```
 
+-- mongoexport -d society -c users --out C:\Users\DELL\Desktop\society\users.json --jsonArray
+--- 2023-04-28T15:37:35.635+0530 connected to: mongodb://localhost/
+--- 2023-04-28T15:37:35.658+0530 exported 30 records
+
 ## BLOCK-writeCode
 
 Export `users` collection from `test` database onto `Desktop` in a file named `exported.json`.
+
+-- mongoexport -d test -c users --out C:\Users\DELL\Desktop\exported.json --jsonArray
 
 #### Import from csv file
 
@@ -66,3 +74,5 @@ mongoimport -d DB_NAME -c COLLECTION_NAME --type csv --file elections.csv(file l
 Generate mock csv data from `https://www.convertcsv.com/generate-test-data.htm`
 
 - insert this mock csv data into `test` database into a collection named `students`
+
+-- mongoimport -d test -c students --type csv --file "C:\Users\DELL\Desktop\data.json" --headerline
